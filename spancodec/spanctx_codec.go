@@ -14,7 +14,7 @@ import (
 
 
 
-func encodeSpanContextToEnv(ctx context.Context) {
+func EncodeSpanContextToEnv(ctx context.Context) {
 	span := trace.SpanFromContext(ctx)
 	spanContext := span.SpanContext()
 	fmt.Println(spanContext.TraceID())
@@ -39,7 +39,7 @@ func encodeSpanContextToEnv(ctx context.Context) {
 
 
 
-func decodeSpanContextFromEnv() context.Context {
+func DecodeSpanContextFromEnv() context.Context {
 	encodedContext, ok := os.LookupEnv("OTEL_TRACE_SPAN_CONTEXT")
 	if !ok {
 		fmt.Println("Error:Not found OTEL_TRACE_SPAN_CONTEXT.")
