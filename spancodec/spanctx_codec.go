@@ -34,7 +34,7 @@ func EncodeSpanContextToEnv(ctx context.Context) (string, string) {
 
 	// Output the encoded SpanContext
 	//key OTEL_TRACE_SPAN_CONTEXT, value is encodedContext
-	key: = otelEnvKey
+	key := otelEnvKey
 	fmt.Println(encodedContext)
 	return key, encodedContext
 }
