@@ -8,7 +8,7 @@ import (
 	"strings"
 
 	"go.opentelemetry.io/otel/propagation"
-	"go.opentelemetry.io/otel/trace"
+	//"go.opentelemetry.io/otel/trace"
 )
 
 const otelEnvKey string = "OTEL_TRACE_SPAN_CONTEXT"
@@ -42,7 +42,7 @@ func EncodeSpanContextToEnv(ctx context.Context) (string, string) {
 
 
 func DecodeSpanContextFromEnv() context.Context {
-	key = otelEnvKey
+	key := otelEnvKey
 	encodedContext, ok := os.LookupEnv(key)
 	if !ok {
 		fmt.Println("Error:Not found OTEL_TRACE_SPAN_CONTEXT.")
