@@ -7,18 +7,18 @@ import (
 	"os"
 	"strings"
 
-	//"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/trace"
 )
 
+const otelEnvKey string = "OTEL_TRACE_SPAN_CONTEXT"
 
 
-func EncodeSpanContextToEnv(ctx context.Context) {
+func EncodeSpanContextToEnv(ctx context.Context) (string, string) {
 	span := trace.SpanFromContext(ctx)
-	spanContext := span.SpanContext()
-	fmt.Println(spanContext.TraceID())
-	fmt.Println(spanContext.SpanID())
+	//spanContext := span.SpanContext()
+	//fmt.Println("Trace ID:" + spanContext.TraceID())
+	//fmt.Println("Span ID:" + spanContext.SpanID())
 
 	// Encode SpanContext into key-value text format
 	textMapPropagator := propagation.TraceContext{}
@@ -31,16 +31,19 @@ func EncodeSpanContextToEnv(ctx context.Context) {
 	}
 
 	encodedContext := strings.Join(parts, ",")
-	fmt.Println("encodedContext" + encodedContext)
 
-	// Put the encoded SpanContext into environment variables
-	os.Setenv("OTEL_TRACE_SPAN_CONTEXT", encodedContext)
+	// Output the encoded SpanContext
+	//key OTEL_TRACE_SPAN_CONTEXT, value is encodedContext
+	key = otelEnvKey
+	fmt.Println(encodedContext)
+	return key, encodeContext
 }
 
 
 
 func DecodeSpanContextFromEnv() context.Context {
-	encodedContext, ok := os.LookupEnv("OTEL_TRACE_SPAN_CONTEXT")
+	key = otelEnvKey
+	encodedContext, ok := os.LookupEnv(key)
 	if !ok {
 		fmt.Println("Error:Not found OTEL_TRACE_SPAN_CONTEXT.")
 		return nil
@@ -59,7 +62,6 @@ func DecodeSpanContextFromEnv() context.Context {
 		}
 	}
 	carrier := propagation.MapCarrier(headerMap)
-	fmt.Println(carrier)
 	ctx := propagator.Extract(context.Background(), carrier)
 	return ctx
 }
