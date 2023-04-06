@@ -15,7 +15,7 @@ const otelEnvKey string = "OTEL_TRACE_SPAN_CONTEXT"
 
 
 func EncodeSpanContextToEnv(ctx context.Context) (string, string) {
-	span := trace.SpanFromContext(ctx)
+	//span := trace.SpanFromContext(ctx)
 	//spanContext := span.SpanContext()
 	//fmt.Println("Trace ID:" + spanContext.TraceID())
 	//fmt.Println("Span ID:" + spanContext.SpanID())
@@ -34,9 +34,9 @@ func EncodeSpanContextToEnv(ctx context.Context) (string, string) {
 
 	// Output the encoded SpanContext
 	//key OTEL_TRACE_SPAN_CONTEXT, value is encodedContext
-	key = otelEnvKey
+	key: = otelEnvKey
 	fmt.Println(encodedContext)
-	return key, encodeContext
+	return key, encodedContext
 }
 
 
